@@ -14,6 +14,7 @@ const outDir = path.resolve(process.argv[2] ?? 'docs')
 
 await stripQueryFromFileNames()
 await localizeCdnAssets()
+await makeCookieBannerDismissPersistent()
 await makeNotFoundPageRootAbsolute()
 await writeFile(path.join(outDir, 'CNAME'), `${CUSTOM_DOMAIN}\n`)
 await writeFile(path.join(outDir, '.nojekyll'), '')
@@ -70,6 +71,15 @@ async function downloadAsset (url) {
   await mkdir(path.dirname(target), { recursive: true })
   await writeFile(target, Buffer.from(await response.arrayBuffer()))
   console.info(`Downloaded ${url}`)
+}
+
+// Finsweet's "close" action does not save a choice, so the banner returns on every visit.
+// Treat only the banner's close button as a denial; preference-dialog close buttons remain unchanged.
+async function makeCookieBannerDismissPersistent () {
+  await transformTextFiles(['.html'], content => content.replace(
+    /(<div fs-cc="banner"[\s\S]*?<a )fs-cc="close"/,
+    '$1fs-cc="deny"'
+  ))
 }
 
 // GitHub Pages serves 404.html at any missing path, so relative asset paths would break when nested.
