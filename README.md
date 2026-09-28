@@ -23,29 +23,6 @@ yarn preview
 
 The generated website is stored in `docs/`. The mirror script downloads every page listed in the current sitemap, along with its assets, then post-processes references that Wget cannot localize by itself.
 
-## GitHub Pages
-
-In the GitHub repository:
-
-1. Open **Settings → Pages**.
-2. Select **Deploy from a branch** as the source.
-3. Select the `main` branch and `/docs` folder.
-4. Save the configuration.
-5. Enable **Enforce HTTPS** after GitHub provisions the certificate.
-
-The included `docs/CNAME` configures the custom domain as `www.airswap.xyz`.
-
-Configure DNS with:
-
-- A `CNAME` record for `www` pointing to `<organization>.github.io`.
-- If the bare `airswap.xyz` domain should also resolve, add `A` records for:
-  - `185.199.108.153`
-  - `185.199.109.153`
-  - `185.199.110.153`
-  - `185.199.111.153`
-
-Replace `<organization>` with the GitHub organization or account that owns the repository.
-
 ## How mirroring works
 
 The core Wget command is:
