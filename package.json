@@ -1,0 +1,13 @@
+{
+  "name": "airswap-website",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "mirror": "bash scripts/mirror.sh",
+    "verify": "node scripts/verify.mjs docs",
+    "preview": "python3 -m http.server 8080 --directory docs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
